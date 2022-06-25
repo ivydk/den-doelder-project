@@ -87,9 +87,12 @@ class BacklogController extends Controller
      *
      * @param Backlog $backlog
      * @return Application|Factory|View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(Backlog $backlog): View|Factory|Application
     {
+        $this->authorize('edit', $backlog);
+
         return view('backlogs.edit', compact('backlog'));
 
     }
