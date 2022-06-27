@@ -175,7 +175,7 @@ class OrderController extends Controller
      */
     public function data(Request $request): Factory|View|Application
     {
-        $orders = Order::filter($request->all())->orderBy('start_time', 'desc')->get();
+        $orders = Order::filter($request->all())->orderBy('start_time', 'asc')->get();
         return view('orders.data', compact('orders'));
     }
 }
