@@ -20,7 +20,7 @@ class ColumnSeeder extends Seeder
             'number_of_planks',
             'stringer_boards',
             'fungi',
-            'waan '
+            'waan'
         ];
 
         $upper_deck_category_id = DB::table('categories')->where('category', 'upper_deck')->value('id');
