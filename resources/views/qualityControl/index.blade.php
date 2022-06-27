@@ -9,7 +9,7 @@
             <h1 class="title has-text-centered">{{__("Order")}} {{ $order->ordernumber }}</h1>
         </div>
 
-        <table class="table">
+        <table class="table is-bordered">
             <thead>
             <tr>
                 <th><abbr title="time">{{__("Time")}}</abbr></th>
