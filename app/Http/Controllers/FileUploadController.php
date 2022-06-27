@@ -17,7 +17,6 @@ class FileUploadController extends Controller
 
         $validatedData = $request->validate([
             'file' => 'required:pdf|max:2048',
-
         ]);
 
         $name = $request->file('file')->getFilename();
