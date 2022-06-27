@@ -173,7 +173,7 @@
                             <p class="title text-lg-center">{{__("Error occurred")}}</p>
                         @else
                             <a href="{{ route('backlog.create', ['ordernumber' => $order->ordernumber ])}}">
-                                <p class="title text-lg-center">{{__("Error")}}</p>
+                                <p class="title text-lg-center">{{__("Create error")}}</p>
                             </a>
                         @endif
                     </div>
