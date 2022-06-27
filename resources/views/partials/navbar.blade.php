@@ -51,8 +51,8 @@
 
             <div class="navbar-dropdown">
                 @include('partials/language_switcher')
-                <button class="navbar-item" onclick="location.href='{{ route('file-upload.index') }}'">{{__('PDF Upload')}}
-                </button>
+{{--                <button class="navbar-item" onclick="location.href='{{ route('file-upload.index') }}'">{{__('PDF Upload')}}--}}
+{{--                </button>--}}
                 <form action="{{ route('destroy', 'logout') }}" method="POST">
                     @csrf
                     <button class="navbar-item" type="submit">
