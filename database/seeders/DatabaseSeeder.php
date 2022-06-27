@@ -19,7 +19,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ProductionTableSeeder::class);
         $this->call(AdminTableSeeder::class);
         $this->call(QualityControlSeeder::class);
-        $this->call(BacklogSeeder::class);
         $this->call(PermissionTableSeeder::class);
         $this->call(LocationSeeder::class);
 
