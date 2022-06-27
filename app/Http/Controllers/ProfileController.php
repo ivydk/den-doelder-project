@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Error;
-use App\Models\Order;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
-use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 
 class ProfileController extends Controller
@@ -22,30 +20,39 @@ class ProfileController extends Controller
         return view('file-upload.index', array('user' => Auth::user()));
     }
 
-    public function index(Request $request)
+    public function index()
     {
-        $users = User::filter($request)->get();
-
-        return view('file-upload.index', compact('users'));
+        return view('file-upload.index');
     }
 
+    /**
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function store(Request $request)
     {
-        if ($request->file('file')) {
-            $file = $request->file('file');
-            $filename = time() . '.' . $request->file('file')->extension();
-            $filePath = public_path() . '/files/uploads/';
-            $file->move($filePath, $filename);
-        }
+        $this->validate($request, [
+            'file' => 'required|mimes:pdf|max:2048',
+        ]);
+
+        $name = $request->file('file')->getClientOriginalName();
+
+        $path = $request->file('file')->store('public/files');
+
+
+        $save = new File;
+
+        $save->name = $name;
+        $save->path = $path;
+
+        return redirect('file-upload')->with('status', 'File Has been uploaded successfully');
     }
 
-    public function upload(Request $request): RedirectResponse
-    {
-        $uniqueFileName = uniqid() . $request->get('upload_file')->getClientOriginalName() . '.' . $request->get('upload_file')->getClientOriginalExtension();
+    public function getName(){
+        $storage = File::allFiles(storage_path('files'));
 
-        $request->get('upload_file')->move(public_path('files') . $uniqueFileName);
-
-        return redirect()->back()->with('success', 'File uploaded successfully.');
+        foreach ($storage as $file) {
+            echo $file->getFilename();
+        }
     }
 
 
@@ -62,20 +69,6 @@ class ProfileController extends Controller
             'email' => 'required',
             'password' => 'required',
         ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param User $user
-     * @return Application|Redirector|RedirectResponse
-     */
-    public function update(Request $request, User $user)
-    {
-        $user->update($this->validatedError($request));
-
-        return redirect(route('file-upload.index', $user));
     }
 
 }
